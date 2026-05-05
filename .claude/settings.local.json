@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(django-admin startproject *)",
+      "Bash(python manage.py startapp attendance)",
+      "Bash(pip install *)",
+      "Bash(python -c \"import qrcode; print\\('qrcode OK'\\)\")",
+      "Bash(python -c \"from PIL import Image; print\\('Pillow OK'\\)\")",
+      "Bash(python manage.py makemigrations)",
+      "Bash(python manage.py migrate)",
+      "Bash(python manage.py check)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(python manage.py shell -c ' *)"
+    ]
+  }
+}

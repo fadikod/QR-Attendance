@@ -1,0 +1,32 @@
+{% extends "attendance/base.html" %}
+{% block title %}Student Attendance — Matrix Master{% endblock %}
+
+{% block content %}
+<div class="card">
+  <h1>Student Attendance</h1>
+  <p>Attendance record for session on <strong>{{ session.date }}</strong>.</p>
+
+  {% if attendances %}
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Date</th>
+          <th>Attended</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for record in attendances %}
+          <tr>
+            <td>{{ record.user.first_name }} {{ record.user.last_name }}</td>
+            <td>{{ session.date }}</td>
+            <td>True</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p style="margin-top:1rem;color:#888;">No students have registered attendance for this session yet.</p>
+  {% endif %}
+</div>
+{% endblock %}

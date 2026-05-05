@@ -1,0 +1,51 @@
+{% extends "attendance/base.html" %}
+{% block title %}Sessions — Matrix Master{% endblock %}
+
+{% block content %}
+<div class="card">
+  <h1>Sessions</h1>
+  <p>All recorded sessions. Filter by date or click a session to view student attendance.</p>
+
+  <form method="get" style="margin:1.25rem 0;display:flex;gap:0.75rem;align-items:center;">
+    <input type="date" name="date" value="{{ date_filter }}"
+           style="padding:0.45rem 0.75rem;border:1px solid #ccc;border-radius:6px;font-size:0.95rem;">
+    <button type="submit" class="btn btn-primary">Filter</button>
+    {% if date_filter %}
+      <a href="{% url 'date_list' %}" class="btn" style="background:#6c757d;color:#fff;">Clear</a>
+    {% endif %}
+  </form>
+
+  {% if sessions %}
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Status</th>
+          <th>Attendees</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for session in sessions %}
+          <tr>
+            <td>{{ session.date }}</td>
+            <td>
+              {% if session.is_valid %}
+                <span class="badge-valid">Active</span>
+              {% else %}
+                <span class="badge-expired">Expired</span>
+              {% endif %}
+            </td>
+            <td>{{ session.attendances.count }}</td>
+            <td>
+              <a href="{% url 'student_list' session.external_token %}">View Students</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p style="margin-top:1rem;color:#888;">No sessions found.</p>
+  {% endif %}
+</div>
+{% endblock %}

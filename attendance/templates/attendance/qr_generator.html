@@ -1,0 +1,40 @@
+{% extends "attendance/base.html" %}
+{% block title %}QR Generator — Matrix Master{% endblock %}
+
+{% block content %}
+<div class="card">
+  <h1>QR Generator</h1>
+  <p>Welcome to the QR Generator.</p>
+  <p>Code can be generated for <strong>the day of the session</strong> and is valid only <strong>during the session (2 hours)</strong>.</p>
+
+  <form method="post" style="margin-top:1.5rem;">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary">Generate a QR code</button>
+  </form>
+
+  {% if qr_image_b64 %}
+    <div style="margin-top:2rem;text-align:center;">
+      <img src="data:image/png;base64,{{ qr_image_b64 }}"
+           alt="QR Code" style="width:220px;height:220px;border:4px solid #1a1a2e;border-radius:8px;">
+
+      <div style="margin-top:1.25rem;">
+        <div class="info-item" style="text-align:left;display:inline-block;">
+          <div class="label">Session date</div>
+          <div class="value">{{ session.date }}</div>
+        </div>
+        <div class="info-item" style="text-align:left;display:inline-block;margin-left:2rem;">
+          <div class="label">Valid until</div>
+          <div class="value">{{ session.valid_until|date:"H:i" }}</div>
+        </div>
+      </div>
+
+      <div style="margin-top:1.5rem;padding:1rem;background:#f8f9fa;border-radius:8px;text-align:left;">
+        <div class="label" style="margin-bottom:0.4rem;">External shareable link (no login required)</div>
+        <code style="word-break:break-all;font-size:0.9rem;">
+          {{ request.scheme }}://{{ request.get_host }}{% url 'student_list' session.external_token %}
+        </code>
+      </div>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

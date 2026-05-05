@@ -1,0 +1,10 @@
+{% extends "attendance/base.html" %}
+{% block title %}Home — Matrix Master{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width:480px;margin:0 auto;text-align:center;">
+  <h1>Welcome, {{ user.first_name|default:user.username }}</h1>
+  <p style="margin-top:0.75rem;">You are logged in as <strong>{{ user.username }}</strong>.</p>
+  <p>To register your attendance, scan the QR code displayed by your admin during the session.</p>
+</div>
+{% endblock %}
